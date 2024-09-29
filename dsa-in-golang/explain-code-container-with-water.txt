@@ -16,6 +16,57 @@ Input: height = [1,1]
 Output: 1
 
 
+- Pseudo Code:
+    Function maxArea(height: List of integers) -> Integer:
+    Initialize 'left' pointer to 0
+    Initialize 'right' pointer to length of height - 1
+    Initialize 'maxarea' to 0
+
+    While 'left' is less than 'right':
+        Calculate 'ht' as the minimum of height[left] and height[right]
+        Calculate current area as 'ht' * (right - left)
+        Update 'maxarea' to the maximum of the current area and the previous maxarea
+
+        If height[left] is less than height[right]:
+            Increment 'left' pointer
+        Else:
+            Decrement 'right' pointer
+
+    Return 'maxarea'
+
+Function main():
+    Create a list 'height' with values [1, 8, 6, 2, 5, 4, 8, 3, 7]
+    Call maxArea(height) and store the result in 'result'
+    Print 'result'
+
+x ------------expalin Pseudo code --------------
+Explanation of the Pseudo Code:
+Function maxArea:
+
+Input: Takes a list of integers called height which represents heights of lines.
+Initialization:
+left is initialized to point at the beginning of the list (index 0).
+right is initialized to point at the end of the list (index len(height) - 1).
+maxarea is initialized to 0 to store the maximum area found so far.
+Loop: The loop runs while left is less than right. It:
+Calculates the height (ht) as the minimum of the heights at left and right.
+Calculates the area as ht * (right - left) (distance between the pointers).
+Updates maxarea to the maximum of the current area and the previously stored maxarea.
+Moves the pointer associated with the smaller height inward (either left++ or right--).
+Return: Once the loop finishes, it returns maxarea which is the maximum area found.
+Function main:
+
+Initializes a list height with predefined values [1, 8, 6, 2, 5, 4, 8, 3, 7].
+Calls the maxArea function with this list and stores the result in result.
+Prints the result to the console.
+Example Walkthrough:
+For the list [1, 8, 6, 2, 5, 4, 8, 3, 7]:
+
+The left pointer starts at index 0 (height 1) and the right pointer starts at index 8 (height 7).
+The loop iteratively calculates areas using the smaller of the two heights and moves the pointers inward.
+Eventually, the maximum area found is returned, which is printed in the main function.
+
+
 % -----SOLUTION------
 
     func maxArea(height []int) int {
