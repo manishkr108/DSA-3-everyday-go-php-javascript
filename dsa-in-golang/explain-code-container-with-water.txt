@@ -1,0 +1,118 @@
+x ------1. Container With Most Water-------
+
+ You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+
+Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+Return the maximum amount of water a container can store.
+
+- Notice that you may not slant the container.
+Input: height = [1,8,6,2,5,4,8,3,7]
+Output: 49
+Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+Example 2:
+
+Input: height = [1,1]
+Output: 1
+
+
+% -----SOLUTION------
+
+    func maxArea(height []int) int {
+        % Function Definition: This function takes an array height of integers representing the height of vertical lines. The goal is to find the maximum area that can be formed between two lines.
+    maxarea := 0
+        % maxarea: This variable stores the maximum area encountered so far. It is initialized to 0 since initially, no area is calculated.
+    left := 0
+        % left pointer: This pointer starts from the leftmost element of the array (height[0]). It will move towards the right as the loop progresses.
+    right := len(height)-1
+        % right pointer: This pointer starts from the rightmost element of the array (height[len(height)-1]). It will move towards the left during the loop.
+        % Together, left and right pointers mark the two ends of the container whose area we are calculating.
+    for left < right {
+        % while loop: The loop continues as long as the left pointer is smaller than the right pointer. Once left meets or surpasses right, the loop stops.
+    ht := float64(min(height[left], height[right]))
+        % ht (height): This stores the height of the container. The height is determined by the shorter of the two lines at the left and right pointers because the water can only be held up to the height of the shorter line.
+        % min(height[left], height[right]): This function returns the smaller of the two heights at left and right.
+        % We cast the result to float64 for precision in calculations later.
+- For example:
+
+ ? If height = [1, 8, 6, 2, 5, 4, 8, 3, 7] and left = 0 and right = 8, h = min(1, 7) = 1.
+     maxarea = int(math.Max(float64(maxarea), h * float64(right-left)))
+
+       %  Area calculation: The formula for calculating the area is:
+        ? area = height * width
+           - where:
+
+                height: is the shorter of the two lines (h).
+                width: is the distance between the left and right pointers (right - left).
+                The current area (h * float64(right-left)) is compared with maxarea. If the current area is larger, maxarea is updated.
+
+                We use math.Max to get the larger of the two values and update maxarea.
+
+                For example:
+
+                If left = 0 and right = 8, the width is 8 - 0 = 8, and if h = 1, then the area = 1 * 8 = 8.
+                maxarea would be updated to 8 if this is larger than the previous value of maxarea.
+
+if height[left] < height[right]{
+            left++
+        }else{
+            right--
+        }
+
+
+        Move the pointers: After calculating the area, we need to adjust the pointers:
+        If height[left] is smaller than height[right], move the left pointer right by one (left++) because the smaller line limits the area, and moving it might give a larger container.
+        If height[right] is smaller or equal, move the right pointer left by one (right--), hoping to find a taller line that may increase the area.
+        This ensures that we keep narrowing the search by eliminating the smaller line and checking for larger potential containers.
+
+       
+           - return maxarea
+       % Return the result: After the loop finishes (when left meets right), the maximum area found (maxarea) is returned.
+
+x Dry Run Example
+  ? Let's use an example array: height = [1, 8, 6, 2, 5, 4, 8, 3, 7]
+
+ - Initial State:
+
+            left = 0, right = 8 (points to height[8] = 7)
+            h = min(1, 7) = 1
+            Area = 1 * (8 - 0) = 8
+            maxarea = 8
+            Next Iteration:
+            
+            height[0] < height[8] → Increment left to 1.
+            left = 1, right = 8
+            h = min(8, 7) = 7
+            Area = 7 * (8 - 1) = 49
+            maxarea = 49
+            Next Iteration:
+            
+            height[1] >= height[8] → Decrement right to 7.
+            left = 1, right = 7
+            h = min(8, 3) = 3
+            Area = 3 * (7 - 1) = 18
+            maxarea = 49 (remains unchanged)
+            Next Iteration:
+            
+            height[1] >= height[7] → Decrement right to 6.
+            left = 1, right = 6
+            h = min(8, 8) = 8
+            Area = 8 * (6 - 1) = 40
+            maxarea = 49
+            Next Iteration:
+            
+            height[1] >= height[6] → Decrement right to 5.
+            left = 1, right = 5
+            h = min(8, 4) = 4
+            Area = 4 * (5 - 1) = 16
+            maxarea = 49
+            Continue similar steps until left meets right.
+            
+            Time and Space Complexity:
+            Time Complexity: O(n), where n is the number of elements in the array. We traverse the array with two pointers from both ends, and each pointer is moved inward exactly once.
+            
+            Space Complexity: O(1), because the function only uses a constant amount of extra space regardless of the input size. All calculations are done in place with the given array.
+            
+            This is an efficient solution to the problem because it finds the maximum area in a single pass using the two-pointer approach.
+
+
